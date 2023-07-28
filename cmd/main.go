@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/soft-feather/router-engine/module/packet"
+	"github.com/soft-feather/router-engine/module/route/table/manager"
 )
 
 // ModuleType
@@ -27,8 +28,8 @@ type Register struct {
 }
 
 func (r *Register) Init() {
-	r.runModuleList = make([]ModuleType, 10)
-	r.moduleList = make([]ModuleType, 10)
+	r.runModuleList = make([]ModuleType, 0, 10)
+	r.moduleList = make([]ModuleType, 0, 10)
 }
 
 func (r *Register) RegisterModule(module ModuleType) {
@@ -37,12 +38,19 @@ func (r *Register) RegisterModule(module ModuleType) {
 
 func (r *Register) Run() {
 	var err error
+
 	for _, module := range r.moduleList {
-		err = module.Init()
-		if err != nil {
+		if err := module.Init(); err != nil {
+			// TODO:错误日志输出
+
 			break
 		}
+
+		// 启动成功加入到已启动模块列表
+		r.runModuleList = append(r.runModuleList, module)
 	}
+
+	// 启动错误则关闭已启动的模块
 	if err != nil {
 		r.Shutdown()
 	}
@@ -56,7 +64,11 @@ func (r *Register) Shutdown() {
 
 func main() {
 	r := &Register{}
-	p := &packet.Server{}
-	r.RegisterModule(p)
+
+	// 模块注册
+	r.RegisterModule(new(packet.Server))
+	r.RegisterModule(new(manager.Service))
+
+	// 启动
 	r.Run()
 }
