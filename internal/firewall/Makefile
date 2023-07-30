@@ -6,6 +6,7 @@ CBPFFILENAME = main.bpf.o
 VMLINUXH = ./vmlinux.h
 LIBBPFPATH = $(BASEDIR)/libbpfso
 
+
 one-make:
 	make c2bpf
 	make bpf2go
@@ -54,11 +55,3 @@ con-vmlinux:
 		echo "INFO: generating $(VMLINUXH) from $(BTFFILE)"; \
 		$(BPFTOOL) btf dump file $(BTFFILE) format c > $(VMLINUXH); \
 	fi
-
-build-bpf:
-	CC="gcc" CFLAGS="-g -O2 -Wall -fpie" LD_FLAGS="" \
-       /usr/bin/make -C ./libbpf/src \
-    	BUILD_STATIC_ONLY=1 \
-    	OBJDIR=$(LIBBPFPATH)/libbpf \
-    	DESTDIR=$(LIBBPFPATH) \
-    	INCLUDEDIR= LIBDIR= UAPIDIR= install
