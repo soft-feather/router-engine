@@ -2,7 +2,8 @@ package main
 
 import (
 	"github.com/soft-feather/router-engine/module/packet"
-	"github.com/soft-feather/router-engine/module/route/table/manager"
+	"github.com/soft-feather/router-engine/module/route/manager"
+	"github.com/wonderivan/logger"
 )
 
 // ModuleType
@@ -41,8 +42,8 @@ func (r *Register) Run() {
 
 	for _, module := range r.moduleList {
 		if err := module.Init(); err != nil {
-			// TODO:错误日志输出
-
+			// 错误日志输出
+			logger.Error(err)
 			break
 		}
 
