@@ -124,6 +124,6 @@ func (t *TableManagerV1) DefaultCheckRoute(ip net.IP) Route {
 	return resRoute
 }
 
-func (t *TableManagerV1) CheckRouteYourShelf(f func([]Route) Route) Route {
-	return f(t.routes)
+func (t *TableManagerV1) CheckRouteYourShelf(ip net.IP, f func([]Route, net.IP) Route) Route {
+	return f(t.routes, ip)
 }

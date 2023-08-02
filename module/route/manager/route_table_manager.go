@@ -38,11 +38,11 @@ type Route struct {
 }
 
 type TableManager interface {
-	AddRoute(route Route)                          // 添加路由
-	UpdateRoute(route Route)                       // 修改路由
-	DeleteRoute(route Route)                       // 删除路由
-	GetAllRoutes() []Route                         // 获取全部路由
-	CleanAllRoutes()                               // 删除全部路由
-	DefaultCheckRoute(ip net.IP) Route             // 路由匹配
-	CheckRouteYourShelf(func([]Route) Route) Route // 自定义路由匹配规则
+	AddRoute(route Route)                                          // 添加路由
+	UpdateRoute(route Route)                                       // 修改路由
+	DeleteRoute(route Route)                                       // 删除路由
+	GetAllRoutes() []Route                                         // 获取全部路由
+	CleanAllRoutes()                                               // 删除全部路由
+	DefaultCheckRoute(ip net.IP) Route                             // 路由匹配
+	CheckRouteYourShelf(net.IP, func([]Route, net.IP) Route) Route // 自定义路由匹配规则
 }
