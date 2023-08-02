@@ -116,6 +116,7 @@ func (t *TableManagerV1) DefaultCheckRoute(ip net.IP) Route {
 			continue
 		}
 
+		maskMaxSize = size
 		minHopCount = r.HopCount
 		resRoute = r
 	}
