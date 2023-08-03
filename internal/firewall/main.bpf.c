@@ -30,14 +30,14 @@ struct {
 
 static __always_inline __u16 csum_fold_helper(__u64 csum)
 {
-int i;
+    int i;
 #pragma unroll
-for (i = 0; i < 4; i++)
-{
-if (csum >> 16)
-csum = (csum & 0xffff) + (csum >> 16);
-}
-return ~csum;
+    for (i = 0; i < 4; i++)
+    {
+        if (csum >> 16)
+            csum = (csum & 0xffff) + (csum >> 16);
+    }
+    return ~csum;
 }
 
 static __always_inline __u16 ipv4_csum(struct iphdr *iph)
