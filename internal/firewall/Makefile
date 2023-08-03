@@ -6,15 +6,10 @@ CBPFFILENAME = main.bpf.o
 VMLINUXH = ./vmlinux.h
 LIBBPFPATH = $(BASEDIR)/libbpfso
 
-
-one-make:
-	make c2bpf
-	make bpf2go
-
 test:
 	echo $(FIREWALLDIR)
 
-bpf2go:
+bpf2go: c2bpf
 	CC=clang \
 		CGO_CFLAGS="-I$(LIBBPFPATH)/" \
 		CGO_LDFLAGS="-lelf -lz $(LIBBPFPATH)/libbpf.a" \
