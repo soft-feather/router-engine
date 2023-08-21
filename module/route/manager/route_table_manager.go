@@ -22,6 +22,7 @@ func (s *Service) Shutdown() {
 
 type Route struct {
 	Id                int64         //路由表id
+	IpV4Num           uint32        // IPv4的数值
 	DestinationIp     net.IP        // 目标地址
 	SubnetMask        net.IPMask    // 子网掩码
 	NextHopAddress    net.IP        // 下一跳的IP
